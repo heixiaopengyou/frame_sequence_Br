@@ -3,7 +3,7 @@
 % First; trying with a network from scratch
 % Classifying features extracted from 30 concatenated frames directly;
 % Defining CNN architecture
-layers = [
+layers11 = [
     imageInputLayer([8 8 30])
     
     % Convolutional layers (adjusting filters and kernel size for 8 x 8 inputs)
