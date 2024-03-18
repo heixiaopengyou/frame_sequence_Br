@@ -23,6 +23,17 @@ layers = [
     softmaxLayer
     classificationLayer];
 
+%%
+maxEpochs = 2;
+miniBatchSize = 5;
+options = trainingOptions('adam', ...
+    'MaxEpochs', maxEpochs, ...
+    'MiniBatchSize', miniBatchSize, ...
+    'Plots', 'training-progress', ...
+    'Verbose', false);
+
+
+
 % Second; Modifying the parameters of an already existing model (alexnet) with good accuracy on imagenet
 nn = alexnet;
 deepNetworkDesigner(nn)
