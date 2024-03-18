@@ -12,7 +12,7 @@ The data is preprocessed in python before saving it in a .mat format for use in 
 The preprocessing includes selecting 30 frames of relevance for each activity (each gesture).
 There are 12 gestures in the dataset, from 'g00' to 'g11'.
 
-The .mat files (frames) are to be standardized and resampled in matlab to meet the output size of the ToF sensor proposed by ST Microelectronics, 
+The .mat files (frames) are to be standardized and resampled in matlab to meet the output size of the ToF sensor (VL53L8CX) proposed by ST Microelectronics, 
 before setting up a datastore and feeding the data to the neural network.
 
 Two models shall be proposed, a 2D convolutional neural network from scratch and a pretrained network.
