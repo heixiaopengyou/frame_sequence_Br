@@ -1,4 +1,5 @@
 The dataset is a subset of the AImageLab Briareo dataset cited below;
+
 @article{briareo2019,
   title={Hand Gestures for the Human-Car Interaction: the {B}riareo dataset},
   author={Manganaro, Fabio and Pini, Stefano and Borghi, Guido and Vezzani, Roberto and Cucchiara, Rita},
