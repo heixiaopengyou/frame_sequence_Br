@@ -4,24 +4,20 @@
 % Classifying features extracted from 30 concatenated frames directly;
 % Defining CNN architecture
 layers11 = [
-    imageInputLayer([8 8 30])
-    
-    % Convolutional layers (adjusting filters and kernel size for 8 x 8 inputs)
-    convolution2dLayer([5,5], 16)
-    batchNormalizationLayer
-    reluLayer
-    maxPooling2dLayer(2, 'Stride', 2)
-    
-    convolution2dLayer([1,1], 32)
-    batchNormalizationLayer
-    reluLayer
-    maxPooling2dLayer(2, 'Stride', 2)
-    flattenLayer
+    % Input layer
+    imageInputLayer([8 8 30]) 
+    % Convolutional and pooling layers
+    convolution2dLayer([2 2], 16)
+    reluLayer()
+    maxPooling2dLayer([2 2], 'Stride', [2 2])
     % Fully connected layers
-    fullyConnectedLayer(64)
-    fullyConnectedLayer(12, 'WeightLearnRateFactor', 10, 'BiasLearnRateFactor', 10) % Adjusting learning rates for final layer
-    softmaxLayer
-    classificationLayer];
+    fullyConnectedLayer(32)
+    reluLayer()
+    fullyConnectedLayer(12)
+    softmaxLayer()
+    classificationLayer()
+];
+% Yields about 33276 parameters, which is less than the imposed limit 936 * 8 * 8
 
 %%
 maxEpochs = 2;
