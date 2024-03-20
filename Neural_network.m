@@ -2,22 +2,40 @@
 
 % First; trying with a network from scratch
 % Classifying features extracted from 30 concatenated frames directly;
-% Defining CNN architecture
-layers11 = [
+% Defining input size
+input_size = [8 8 30];
+
+% Defining the network layers
+layers = [
     % Input layer
-    imageInputLayer([8 8 30]) 
-    % Convolutional and pooling layers
-    convolution2dLayer([2 2], 16)
-    reluLayer()
-    maxPooling2dLayer([2 2], 'Stride', [2 2])
+    imageInputLayer(input_size)
+    
+    % Depthwise separable convolution block 1
+    % layer = groupedConvolution2dLayer(filterSize,numFiltersPerGroup,numGroups)
+    % groupedConvolution2dLayer(3, 3, 'DilationRate', [1 1], 'Padding', 'same')
+    % pointwiseConv2dLayer(32, 1, 'Padding', 'same')
+    % groupedConvolution2dLayer(3,128,3,'Padding','same')
+    groupedConvolution2dLayer(3,2,'channel-wise')
+    reluLayer
+    
+    % Depthwise separable convolution block 2
+    % groupedConvolution2dLayer(3, 3, 'DilationRate', [1 1], 'Padding', 'same')
+    % pointwiseConv2dLayer(64, 1, 'Padding', 'same')
+    % groupedConvolution2dLayer(3,128,3,'Padding','same')
+    groupedConvolution2dLayer(3,2,'channel-wise')
+    reluLayer
+    
+    % Average pooling layer
+    averagePooling2dLayer(2, 'Stride', 2)
+    
     % Fully connected layers
-    fullyConnectedLayer(32)
-    reluLayer()
-    fullyConnectedLayer(12)
-    softmaxLayer()
+    fullyConnectedLayer(128)
+    reluLayer
+    dropoutLayer(0.5) % Optional dropout for regularization
+    fullyConnectedLayer(12) % Output layer with 12 neurons for 12 classes
+    softmaxLayer
     classificationLayer()
 ];
-% Yields about 33276 parameters, which is less than the imposed limit 936 * 8 * 8
 
 %%
 maxEpochs = 2;
@@ -27,7 +45,6 @@ options = trainingOptions('adam', ...
     'MiniBatchSize', miniBatchSize, ...
     'Plots', 'training-progress', ...
     'Verbose', false);
-
 
 
 % Second; Modifying the parameters of an already existing model (alexnet) with good accuracy on imagenet
